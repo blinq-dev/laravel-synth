@@ -33,16 +33,16 @@ class Modules
             ->firstWhere('name', $name)['module'] ?? null;
     }
 
-    public function getOptions() : array
+    public function getOptions(): array
     {
-        return collect(self::$modules)->flatMap(function($x) {
+        return collect(self::$modules)->flatMap(function ($x) {
             return $x['options'];
         })->toArray();
     }
 
     public function select(?string $option = null)
     {
-        foreach(self::$modules as $module) {
+        foreach (self::$modules as $module) {
             if ($module['options'][$option] ?? null) {
                 $module['module']->onSelect($option);
             }

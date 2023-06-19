@@ -2,9 +2,9 @@
 
 namespace Blinq\Synth\Tests;
 
+use Blinq\Synth\SynthServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Blinq\Synth\SynthServiceProvider;
 
 class TestCase extends Orchestra
 {

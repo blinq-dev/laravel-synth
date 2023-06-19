@@ -20,8 +20,9 @@ class Functions
         return self::$functions[$key](...$args);
     }
 
-    public static function registrerAll() {
-        foreach(glob(__DIR__ . '/Functions/*.php') as $file) {
+    public static function registrerAll()
+    {
+        foreach (glob(__DIR__.'/Functions/*.php') as $file) {
             require_once $file;
         }
     }

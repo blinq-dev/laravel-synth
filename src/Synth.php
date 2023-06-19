@@ -3,7 +3,6 @@
 namespace Blinq\Synth;
 
 use Blinq\LLM\Client;
-use Blinq\Synth\Functions;
 use Blinq\LLM\Config\ApiConfig;
 use Blinq\LLM\Entities\ChatMessage;
 use Blinq\LLM\Entities\ChatStream;
@@ -15,12 +14,14 @@ class Synth
     public Client $ai;
 
     public $smallModel = 'gpt-3.5-turbo-0613';
+
     public $largeModel = 'gpt-3.5-turbo-16k-0613';
+
     public $model = 'gpt-3.5-turbo-0613';
 
     public function __construct(public SynthCommand $cmd)
     {
-        if (!env('OPENAI_KEY')) {
+        if (! env('OPENAI_KEY')) {
             throw new \Exception('OPENAI_KEY not set, please set it in your .env file');
         }
 
@@ -29,40 +30,41 @@ class Synth
 
     public function loadSystemMessage(string $name)
     {
-        $this->ai->setSystemMessage(include __DIR__ . "/Prompts/$name.system.php");
+        $this->ai->setSystemMessage(include __DIR__."/Prompts/$name.system.php");
     }
 
     public function chat(string $message, array $options = [])
     {
         try {
-            $this->ai->chat($message, "user", [
+            $this->ai->chat($message, 'user', [
                 'model' => $this->model,
                 'stream' => true,
-                ...$options
+                ...$options,
             ]);
-        } catch(ApiException $ex) {
+        } catch (ApiException $ex) {
             ray($ex);
 
-            if (str($ex->getMessage())->contains("maximum context length") && $this->model == $this->smallModel) {
-                $this->cmd->error("Max context length exceeded, switching to large model");
-                
+            if (str($ex->getMessage())->contains('maximum context length') && $this->model == $this->smallModel) {
+                $this->cmd->error('Max context length exceeded, switching to large model');
+
                 $this->model = $this->largeModel;
+
                 return $this->chat($message, $options);
             } else {
-                $this->cmd->error("OpenAI Error: " . $ex->getMessage());
+                $this->cmd->error('OpenAI Error: '.$ex->getMessage());
             }
         }
     }
 
     public function handleExitSignal()
     {
-        declare(ticks = 1); // Allow posix signal handling
+        declare(ticks=1); // Allow posix signal handling
 
-        pcntl_signal(SIGINT, function() {
+        pcntl_signal(SIGINT, function () {
             if ($this->ai->isBusy()) {
                 $this->ai->cancelRequest();
             }
-        });   
+        });
     }
 
     public function handleStream()
@@ -80,35 +82,43 @@ class Synth
 
     public $allowed = [
         'save_migrations',
-        'save_files'
+        'save_files',
     ];
 
     public function handleFunctionsForLastMessage()
     {
         $lastMessage = $this->ai->getLastMessage();
 
-        if (!$lastMessage) return;
+        if (! $lastMessage) {
+            return;
+        }
 
         $this->handleFunctions($lastMessage);
     }
 
-    public function handleFunctions(ChatMessage $message) {
+    public function handleFunctions(ChatMessage $message)
+    {
         $functionCall = $message->function_call['name'] ?? null;
         $args = $message->function_call['arguments'] ?? null;
 
-        if (!$functionCall) return;
+        if (! $functionCall) {
+            return;
+        }
 
-        if (!in_array($functionCall, $this->allowed)) return;
+        if (! in_array($functionCall, $this->allowed)) {
+            return;
+        }
 
         if ($args) {
             $args = $this->fixSyntax($args);
             $parsed = json_decode($args, true);
-            
-            if (!$parsed) {
-                $this->cmd->error("--------");
+
+            if (! $parsed) {
+                $this->cmd->error('--------');
                 $this->cmd->error($args);
-                $this->cmd->error("--------");
-                $this->cmd->error("The model returned JSON that did not parse, please try again!");
+                $this->cmd->error('--------');
+                $this->cmd->error('The model returned JSON that did not parse, please try again!');
+
                 return;
             }
         }
@@ -127,7 +137,7 @@ class Synth
         $args = str_replace('\\r\\n', '\n', $args);
         $args = str_replace('\r\n', '\n', $args);
 
-        $args = str_replace(PHP_EOL,"", $args);
+        $args = str_replace(PHP_EOL, '', $args);
 
         return $args;
     }

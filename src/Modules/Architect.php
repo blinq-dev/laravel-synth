@@ -2,40 +2,41 @@
 
 namespace Blinq\Synth\Modules;
 
-use Blinq\LLM\Entities\ChatMessage;
-
 class Architect extends Module
 {
     public $attachments = [];
 
-    public function name() : string { 
-        return "Architect";
+    public function name(): string
+    {
+        return 'Architect';
     }
 
-    public function register(): array { 
+    public function register(): array
+    {
         return [
             'architect' => 'Brainstorm with GPT to generate a new application architecture.',
         ];
     }
 
-    public function onSelect(?string $key = null) {
-        $this->cmd->synth->loadSystemMessage("architect");
+    public function onSelect(?string $key = null)
+    {
+        $this->cmd->synth->loadSystemMessage('architect');
         // $schema = include __DIR__ . "/../Prompts/architect.schema.php";
-        $currentQuestion = "What do you want to create?";
+        $currentQuestion = 'What do you want to create?';
         $hasAnswered = false;
 
-        while(true) {
+        while (true) {
             $input = $this->cmd->ask($currentQuestion);
 
-            if ($input == "exit") {
+            if ($input == 'exit') {
                 break;
             }
 
-            if (!$input) {
+            if (! $input) {
                 if ($hasAnswered) {
-                    $this->cmd->modules->get("Attachments")->addAttachmentFromMessage("architecture", $this->cmd->synth->ai->getLastMessage());
+                    $this->cmd->modules->get('Attachments')->addAttachmentFromMessage('architecture', $this->cmd->synth->ai->getLastMessage());
                 }
-      
+
                 break;
             }
 
@@ -44,8 +45,7 @@ class Architect extends Module
 
             $this->cmd->newLine();
             $this->cmd->info("Type something to refine, press enter to save and continue, type 'exit' to discard");
-            $currentQuestion = "You";
+            $currentQuestion = 'You';
         }
     }
-
 }

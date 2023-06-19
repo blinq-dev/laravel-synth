@@ -1,6 +1,6 @@
 <?php
 
-$template = file_get_contents(__DIR__ . '/migrations.template.php');
+$template = file_get_contents(__DIR__.'/migrations.template.php');
 
 return "
     Use below laravel migrations template to create your migrations:

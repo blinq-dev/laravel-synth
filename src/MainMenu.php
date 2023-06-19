@@ -14,15 +14,15 @@ class MainMenu
 
     public function __construct(public SynthCommand $cmd)
     {
-        
+
     }
 
     public function welcome()
     {
         // Let's find out what the user wants
-        $this->cmd->info("-----------------------------------------------");
+        $this->cmd->info('-----------------------------------------------');
         $this->cmd->info('Laravel Synth');
-        $this->cmd->info("-----------------------------------------------");
+        $this->cmd->info('-----------------------------------------------');
     }
 
     public function handle()
@@ -33,15 +33,15 @@ class MainMenu
             ...$moduleOptions,
             'exit' => 'Exit',
         ];
-        
-        while(true) {
+
+        while (true) {
             $this->dispatch('show');
 
             $option = $this->cmd->choice('What do you want to do?', $options);
 
             $this->cmd->modules->select($option);
 
-            if ($option === "exit") {
+            if ($option === 'exit') {
                 return Command::SUCCESS;
             }
         }
