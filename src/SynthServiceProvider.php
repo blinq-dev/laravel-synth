@@ -2,16 +2,16 @@
 
 namespace Blinq\Synth;
 
+use Blinq\Synth\Commands\SynthCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Blinq\Synth\Commands\SynthCommand;
 
 class SynthServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
         // Inlcude the Helpers/* files
-        foreach (glob(__DIR__ . '/Helpers/*.php') as $file) {
+        foreach (glob(__DIR__.'/Helpers/*.php') as $file) {
             require_once $file;
         }
         /*
