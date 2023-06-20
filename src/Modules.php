@@ -3,7 +3,6 @@
 namespace Blinq\Synth;
 
 use Blinq\Synth\Commands\SynthCommand;
-use Blinq\Synth\Modules\Module;
 
 /**
  * This file is responsible for managing the modules in the Synth application.
@@ -12,6 +11,7 @@ use Blinq\Synth\Modules\Module;
 class Modules
 {
     protected static $modules = [];
+
     protected static ?SynthCommand $cmd = null;
 
     public function __construct(SynthCommand $cmd)
@@ -28,7 +28,7 @@ class Modules
     public static function register($module)
     {
         $module = new $module(static::$cmd);
-        
+
         self::$modules[] = [
             'name' => $module->name(),
             'module' => $module,

@@ -16,7 +16,7 @@ Functions::register('save_files', function (SynthCommand $cmd, $files = []) {
 
         // Normalize the file
         // Check if it has <?php at the start (add it)
-        if (str($name)->endsWith("php") && ! str($contents)->startsWith('<?php')) {
+        if (str($name)->endsWith('php') && ! str($contents)->startsWith('<?php')) {
             $contents = "<?php\n\n".$contents;
         }
 

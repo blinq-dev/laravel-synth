@@ -2,7 +2,6 @@
 
 namespace Blinq\Synth;
 
-use Blinq\LLM\Entities\ChatMessage;
 use Blinq\Synth\Commands\SynthCommand;
 use Blinq\Synth\Traits\WithHooks;
 use Illuminate\Console\Command;
@@ -26,8 +25,8 @@ class MainMenu
         $history = $this->cmd->synth->ai->getHistory();
 
         if ($tokens > 0) {
-            $this->cmd->info("Estimated token count: " . $tokens);
-            $this->cmd->info("Number of messages: " . count($history));
+            $this->cmd->info('Estimated token count: '.$tokens);
+            $this->cmd->info('Number of messages: '.count($history));
             $this->cmd->newLine();
         }
     }

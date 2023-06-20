@@ -14,6 +14,7 @@ class Synth
     public Client $ai;
 
     public $smallModel = 'gpt-3.5-turbo-0613';
+
     public $largeModel = 'gpt-3.5-turbo-16k-0613';
 
     public $model = 'gpt-3.5-turbo-0613';
@@ -24,7 +25,7 @@ class Synth
         $this->smallModel = config('synth.small_model', $this->smallModel);
         $this->largeModel = config('synth.large_model', $this->largeModel);
 
-        if (!config('synth.key', env('OPENAI_KEY'))) {
+        if (! config('synth.key', env('OPENAI_KEY'))) {
             throw new \Exception('OPENAI_KEY not set, please set it in your .env or config/synth.php');
         }
 
@@ -108,7 +109,7 @@ class Synth
             return;
         }
 
-        if (!Functions::isAllowed($functionCall)) {
+        if (! Functions::isAllowed($functionCall)) {
             $this->cmd->error("Function $functionCall is not allowed");
 
             return;
@@ -147,7 +148,7 @@ class Synth
         return $args;
     }
 
-    public function estimateTokenCount() : int
+    public function estimateTokenCount(): int
     {
         $wordCount = collect($this->ai->getHistory())
             ->reduce(function ($carry, ChatMessage $item) {
@@ -157,7 +158,7 @@ class Synth
         return floor($wordCount * 0.75);
     }
 
-    public function getLastMessage() : ?ChatMessage
+    public function getLastMessage(): ?ChatMessage
     {
         return $this->ai->getLastMessage();
     }
