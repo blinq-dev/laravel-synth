@@ -26,7 +26,7 @@ class SynthCommand extends Command
 
     public function handle(): int
     {
-        Functions::registrerAll();
+        Functions::registerAll();
 
         $this->synth = new Synth($this);
         $this->synth->handleExitSignal();
