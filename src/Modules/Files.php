@@ -49,17 +49,31 @@ class Files extends Module
         $base = config('synth.file_base', base_path());
 
         foreach ($this->files as $file => $contents) {
-            if ($this->cmd->confirm("Do you want to write the following file: $file", true)) {
-                $file = $base.'/'.$file;
-                $directory = dirname($file);
+            $basename = basename($file);
+            
+            $this->cmd->comment($file);
+            $this->cmd->comment("----");
+            $this->cmd->line($contents);
 
-                if (! is_dir($directory)) {
-                    mkdir($directory, 0777, true);
+            $fullFile = $base.'/'.$file;
+
+            $fileExists = file_exists($fullFile);
+
+            if ($this->cmd->confirm("Write $basename?" . ($fileExists ? ' (File already exists)' : ''), !$fileExists)) {
+                $file = $this->cmd->askWithCompletion('Write path', [$file], $file);
+
+                if ($file) {
+                    $file = $base.'/'.$file;
+                    $directory = dirname($file);
+
+                    if (! is_dir($directory)) {
+                        mkdir($directory, 0777, true);
+                    }
+
+                    file_put_contents($file, $contents);
+
+                    $this->cmd->info("Written $file");
                 }
-
-                file_put_contents($file, $contents);
-
-                $this->cmd->info("Written $file");
             }
         }
 

@@ -14,7 +14,6 @@ class Synth
     public Client $ai;
 
     public $smallModel = 'gpt-3.5-turbo-0613';
-
     public $largeModel = 'gpt-3.5-turbo-16k-0613';
 
     public $model = 'gpt-3.5-turbo-0613';
@@ -46,7 +45,7 @@ class Synth
                 ...$options,
             ]);
         } catch (ApiException $ex) {
-            ray($ex);
+            // ray($ex);
 
             if (str($ex->getMessage())->contains('maximum context length') && $this->model == $this->smallModel) {
                 $this->cmd->error('Max context length exceeded, switching to large model');
@@ -81,6 +80,10 @@ class Synth
             $this->cmd->getOutput()->write(
                 ($x->getMessage()?->function_call['arguments'] ?? '')
             );
+
+            if ($x->done) {
+                $this->cmd->newLine(2);
+            }
         });
     }
 

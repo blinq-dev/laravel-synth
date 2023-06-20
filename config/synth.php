@@ -12,4 +12,6 @@ return [
     'file_base' => base_path(),
     // Keep performance in mind when setting this value
     'search_limit' => 10,
+    // The pattern to exclude for the search
+    'search_exclude_pattern' => '/vendor|storage|node_modules|build|.git|.env/i',
 ];

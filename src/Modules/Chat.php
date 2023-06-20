@@ -47,7 +47,7 @@ class Chat extends Module
             $this->cmd->synth->handleFunctionsForLastMessage();
 
             $this->cmd->newLine(2);
-            $this->cmd->comment("Type something to refine, press enter to save and continue, type 'exit' to discard");
+            $this->cmd->comment("Press enter to accept and continue, type 'exit' to discard, or ask a follow up question.");
             $currentQuestion = 'You';
         }
     }

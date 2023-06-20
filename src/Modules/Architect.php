@@ -46,7 +46,7 @@ class Architect extends Module
             $hasAnswered = true;
 
             $this->cmd->newLine();
-            $this->cmd->info("Type something to refine, press enter to save and continue, type 'exit' to discard");
+            $this->cmd->info("Press enter to accept and continue, type 'exit' to discard, or ask a follow up question.");
             $currentQuestion = 'You';
         }
     }

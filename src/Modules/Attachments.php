@@ -129,9 +129,8 @@ class Attachments extends Module
                     break;
                 }
             } else {
-                $search = (string) str($file)->before('*');
-
-                $files = $this->search($search);
+                $query = (string) str($file)->before('    => ');
+                $files = $this->search($query);
 
                 foreach ($files as $file) {
                     $this->addAttachmentFromFile($file);
@@ -147,12 +146,13 @@ class Attachments extends Module
         $files = [];
         $limit = config('synth.search_limit', 10);
         $base = config('synth.file_base', base_path());
+        $excludePattern = config('synth.search_exclude_pattern', '/vendor|storage|node_modules|build|.git|.env/i');
         $count = 0;
 
         /**
          * @var \SplFileInfo $file
          */
-        foreach (files_in($base, $search, excludePattern: '/vendor|storage|node_modules|.git|.env/i') as $file) {
+        foreach (files_in($base, $search, excludePattern: $excludePattern) as $file) {
             if ($file->isDir()) {
                 continue;
             }
@@ -216,7 +216,7 @@ class Attachments extends Module
          * @var ChatMessage $message
          */
         foreach ($history as &$message) {
-            if ($message->role == 'user' && str($message->content)->contains('[x84y2jd]')) {
+            if ($message->role == 'user' && str($message->content)->contains('[attached_files]')) {
                 $message->content = $this->getAttachmentsAsString();
                 $found = true;
             }
@@ -227,7 +227,7 @@ class Attachments extends Module
             $history = $this->cmd->synth->ai->getHistory();
         }
 
-        ray($history);
+        // ray($history);
     }
 
     public function getAttachments(string $key = null)
@@ -237,14 +237,14 @@ class Attachments extends Module
 
     public function getAttachmentsAsString()
     {
-        $string = '[x84y2jd]'.PHP_EOL;
+        $string = '[attached_files]'.PHP_EOL;
 
         foreach ($this->attachments as $key => $value) {
             $string .= "$key:".PHP_EOL;
             $string .= $value.PHP_EOL;
         }
 
-        $string .= '[/x84y2jd]'.PHP_EOL;
+        $string .= '[/attached_files]'.PHP_EOL;
 
         return $string;
     }

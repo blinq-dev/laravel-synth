@@ -23,6 +23,7 @@ class Modules
         static::register(Modules\Migrations::class);
         static::register(Modules\Models::class);
         static::register(Modules\Files::class);
+        static::register(Modules\History::class);
     }
 
     public static function register($module)
