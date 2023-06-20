@@ -10,7 +10,9 @@ Synth is a Laravel tool that helps you generate code and perform various tasks i
 https://github.com/blinq-dev/laravel-synth/assets/168357/78116a9a-1f37-4410-9f20-f9fe6573196b
 
 ### Attach files and create a readme.md
-https://github.com/blinq-dev/laravel-synth/assets/168357/6635807d-e313-48a2-9aae-26686d910d7e
+https://github.com/blinq-dev/laravel-synth/assets/168357/70bc57a5-0aa8-439f-95af-fb02685e3756
+
+
 
 
 ## Installation
