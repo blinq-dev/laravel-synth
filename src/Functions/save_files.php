@@ -16,7 +16,7 @@ Functions::register('save_files', function (SynthCommand $cmd, $files = []) {
 
         // Normalize the file
         // Check if it has <?php at the start (add it)
-        if (! str($contents)->startsWith('<?php')) {
+        if (str($name)->endsWith("php") && ! str($contents)->startsWith('<?php')) {
             $contents = "<?php\n\n".$contents;
         }
 
@@ -32,20 +32,7 @@ Functions::register('save_files', function (SynthCommand $cmd, $files = []) {
             $name = $userPath.'/'.$name;
         }
 
-        $cmd->newLine();
-        if ($cmd->confirm("Do you want to save the following file: $name", true)) {
-
-            // Make sure the directory exists (recursive)
-            $directory = dirname($name);
-
-            if (! is_dir($directory)) {
-                mkdir($directory, 0777, true);
-            }
-
-            file_put_contents($name, $contents);
-
-            $cmd->info("Saved $name");
-            $cmd->modules->get('Attachments')?->addAttachment($name, $contents);
-        }
+        $cmd->modules->get('Files')?->addFile($name, $contents);
+        $cmd->modules->get('Attachments')?->addAttachment($name, $contents);
     }
 });

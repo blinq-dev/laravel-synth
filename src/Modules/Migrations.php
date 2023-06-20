@@ -2,10 +2,12 @@
 
 namespace Blinq\Synth\Modules;
 
+/**
+ * This file is a module in the Synth application, specifically for handling the generation of migrations.
+ * It provides functionality to register, select, and refine migrations based on the architecture.
+ */
 class Migrations extends Module
 {
-    public $attachments = [];
-
     public function name(): string
     {
         return 'Migrations';
@@ -24,9 +26,7 @@ class Migrations extends Module
 
         $schema = include __DIR__.'/../Prompts/migrations.schema.php';
 
-        $architecture = $this->cmd->attachments['architecture'] ?? '';
-
-        if ($architecture == '') {
+        if (! $this->cmd->modules->get('Attachments')->getAttachments('architecture')) {
             $this->cmd->error('You need to create an architecture first');
 
             return;

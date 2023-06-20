@@ -15,11 +15,11 @@ function files_in(string $path, ?string $search = null, ?string $excludePattern 
     $it = new \RecursiveDirectoryIterator($path);
     $it = new \RecursiveIteratorIterator($it);
 
-    // $it = new \RegexIterator($it, $pattern, \RegexIterator::MATCH);
     if ($search) {
         // Replace space by a pipe
+        $search = str_replace('*', '4ST3R1ZK', $search);
         $search = '/'.preg_quote($search, '/').'/i';
-        $search = str_replace(' ', '.*', $search);
+        $search = str_replace('4ST3R1ZK', '.*', $search);
 
         $it = new \RegexIterator($it, $search, \RegexIterator::MATCH);
     }

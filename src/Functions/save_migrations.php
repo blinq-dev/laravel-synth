@@ -22,18 +22,9 @@ Functions::register('save_migrations', function (SynthCommand $cmd, $migrations 
         if (! str($contents)->startsWith('<?php')) {
             $contents = "<?php\n\n".$contents;
         }
-
-        echo PHP_EOL;
-        if ($cmd->confirm("Do you want to save the following migration: $file", true)) {
-
-            // Run this: artisan make:migration $name
-            // Save the contents to the migration file
-
-            $migrationFile = database_path('migrations/'.$file);
-
-            file_put_contents($migrationFile, $contents);
-
-            $cmd->modules->get('Attachments')?->addAttachment($migrationFile, $contents);
-        }
+        
+        $migrationFile = database_path('migrations/'.$file);
+        $cmd->modules->get('Files')?->addFile($migrationFile, $contents);
+        $cmd->modules->get('Attachments')?->addAttachment($migrationFile, $contents);
     }
 });

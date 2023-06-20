@@ -22,8 +22,8 @@ class SynthServiceProvider extends PackageServiceProvider
         $package
             ->name('synth')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_synth_table')
+            // ->hasViews()
+            // ->hasMigration('create_synth_table')
             ->hasCommand(SynthCommand::class);
     }
 }

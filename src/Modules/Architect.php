@@ -2,10 +2,12 @@
 
 namespace Blinq\Synth\Modules;
 
+/**
+ * This file is a module in the Synth application, specifically for handling application architecture.
+ * It provides functionality to brainstorm and generate a new application architecture using GPT.
+ */
 class Architect extends Module
 {
-    public $attachments = [];
-
     public function name(): string
     {
         return 'Architect';
@@ -34,7 +36,7 @@ class Architect extends Module
 
             if (! $input) {
                 if ($hasAnswered) {
-                    $this->cmd->modules->get('Attachments')->addAttachmentFromMessage('architecture', $this->cmd->synth->ai->getLastMessage());
+                    $this->getModule('Attachments')->addAttachmentFromMessage('architecture', $this->cmd->synth->ai->getLastMessage());
                 }
 
                 break;

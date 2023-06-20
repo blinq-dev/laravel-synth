@@ -4,6 +4,10 @@ namespace Blinq\Synth\Modules;
 
 use Blinq\LLM\Entities\ChatMessage;
 
+/**
+ * This file is a module in the Synth application, specifically for handling attachments.
+ * It provides functionality to attach and view files, search and attach files, and manage attachments.
+ */
 class Attachments extends Module
 {
     public $attachments = [];
@@ -21,7 +25,6 @@ class Attachments extends Module
 
         return [
             'attach' => 'Attach one or more files to this conversation.',
-            'attach:view' => 'View the attached files.',
         ];
     }
 
@@ -38,14 +41,25 @@ class Attachments extends Module
     public function viewAttachments()
     {
         foreach ($this->attachments as $key => $x) {
-            $this->cmd->line($key);
-            $this->cmd->line('----');
+            $this->cmd->comment($key);
+            $this->cmd->comment('----');
             $this->cmd->line($x);
             $this->cmd->newLine();
-
-            $this->cmd->info('Press enter to continue');
-            $this->cmd->ask('You');
         }
+
+        if (count($this->attachments) === 0) {
+            $this->cmd->comment('No attachments');
+        }
+
+        $this->cmd->newLine();
+    }
+
+    public function clearAttachments()
+    {
+        $this->attachments = [];
+
+        $this->cmd->comment('Attachments cleared');
+        $this->cmd->newLine();
     }
 
     public function addAttachment($key, $value)
@@ -54,6 +68,12 @@ class Attachments extends Module
         $this->cmd->comment("Attaching $base");
         $this->attachments[$key] = $value;
         $this->setAttachmentsToChatHistory();
+    }
+
+
+    public function removeAttachment($key)
+    {
+        unset($this->attachments[$key]);
     }
 
     public function notice()
@@ -68,9 +88,17 @@ class Attachments extends Module
 
     public function searchAndAttachFiles()
     {
+        $this->cmd->info("Type something to search for a file to attach");
+        $this->cmd->line("Search and end with '*' to include all matching files");
+        $this->cmd->newLine();
+        $this->cmd->line("exit   - Press enter or type 'exit' to discard");
+        $this->cmd->line("view   - to view the current attachments");
+        $this->cmd->line("clear  - to clear the current attachments");
+
         while (true) {
             $hasWildcard = false;
-            $file = $this->cmd->askWithCompletion('Search for a file to include (end with * to match multiple files)', function ($x) use (&$hasWildcard) {
+
+            $file = $this->cmd->askWithCompletion('Search', function ($x) use (&$hasWildcard) {
                 if (! $x) {
                     return [];
                 }
@@ -79,12 +107,21 @@ class Attachments extends Module
                 }
 
                 $hasWildcard = str($x)->contains('*');
-                $x = str_replace('*', '', $x);
+                // $x = str_replace('*', '', $x);
 
                 $files = $this->search($x);
 
                 return $files ?? [];
             });
+
+            if ($file === "view") {
+                $this->viewAttachments();
+                continue;
+            }
+            if ($file === "clear") {
+                $this->clearAttachments();
+                continue;
+            }
 
             if (! $hasWildcard) {
                 if (! $this->addAttachmentFromFile($file)) {
@@ -101,26 +138,34 @@ class Attachments extends Module
             }
 
             $this->setAttachmentsToChatHistory();
-            $this->cmd->newLine(2);
-            $this->cmd->comment("Type something to refine, press enter to save and continue, type 'exit' to discard");
         }
     }
 
     public function search($search)
     {
         $files = [];
+        $limit = config('synth.search_limit', 10);
+        $base = config('synth.file_base', base_path());
+        $count = 0;
+
         /**
          * @var \SplFileInfo $file
          */
-        foreach (files_in(base_path(), $search, excludePattern: '/vendor|storage|node_modules|.git|.env/i') as $file) {
+        foreach (files_in($base, $search, excludePattern: '/vendor|storage|node_modules|.git|.env/i') as $file) {
             if ($file->isDir()) {
                 continue;
             }
             $path = $file->getRealPath();
             // Make it relative to base_path
-            $path = str_replace(base_path().'/', '', $path);
+            $path = str_replace($base.'/', '', $path);
 
             $files[] = $search.'    => '.$path;
+
+            $count++;
+            
+            if ($count >= $limit) {
+                break;
+            }
         }
 
         return $files;
@@ -140,7 +185,8 @@ class Attachments extends Module
         }
 
         try {
-            $contents = file_get_contents(base_path($filename));
+            $base = config('synth.file_base', base_path());
+            $contents = file_get_contents($base.'/'.$filename);
         } catch (\Throwable $th) {
             $this->cmd->error("Could not find file $filename");
 

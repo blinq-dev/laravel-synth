@@ -2,6 +2,10 @@
 
 namespace Blinq\Synth\Modules;
 
+/**
+ * This file is a module in the Synth application, specifically for handling chat interactions.
+ * It provides functionality to chat with GPT and create/update files using the chat interface.
+ */
 class Chat extends Module
 {
     public $attachments = [];

@@ -6,15 +6,23 @@ trait WithHooks
 {
     public $hooks = [];
 
-    public function on($event, $callback)
+    public function on($event, $callback, $prio = 0)
     {
-        $this->hooks[$event][] = $callback;
+        $this->hooks[$event][$prio][] = $callback;
     }
 
     public function dispatch($event, $args = [])
     {
-        if ($this->hooks[$event] ?? false) {
-            foreach ($this->hooks[$event] as $callback) {
+        if (!isset($this->hooks[$event])) {
+            return;
+        }
+
+        $hooks = $this->hooks[$event];
+
+        ksort($hooks);
+
+        foreach ($hooks as $prio => $callbacks) {
+            foreach ($callbacks as $callback) {
                 $callback(...$args);
             }
         }

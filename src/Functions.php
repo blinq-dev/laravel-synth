@@ -20,10 +20,21 @@ class Functions
         return self::$functions[$key](...$args);
     }
 
-    public static function registrerAll()
+    public static function registerAll()
     {
         foreach (glob(__DIR__.'/Functions/*.php') as $file) {
             require_once $file;
         }
+    }
+
+    public static function isAllowed($name)
+    {
+        foreach(static::$functions as $key => $value) {
+            if ($name === $key) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -8,6 +8,10 @@ use Blinq\Synth\Modules;
 use Blinq\Synth\Synth;
 use Illuminate\Console\Command;
 
+/**
+ * This file contains the main command for the Synth application.
+ * It handles the execution of the command and manages the Synth, MainMenu, and Modules instances.
+ */
 class SynthCommand extends Command
 {
     public $signature = 'synth';

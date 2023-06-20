@@ -1,66 +1,151 @@
-# This is my package synth
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/blinq/synth.svg?style=flat-square)](https://packagist.org/packages/blinq/synth)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/blinq-dev/laravel-synth/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/blinq-dev/laravel-synth/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+# Laravel Synth
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Synth is a Laravel tool that helps you generate code and perform various tasks in your Laravel application. It leverages the power of OpenAI's GPT language model to provide an interactive and intelligent development experience.
 
 ## Installation
 
-You can install the package via composer:
+1. Install the Synth package using Composer:
 
-```bash
-composer require blinq/synth
-```
+   ```bash
+   composer require blinq/synth
+   ```
 
-You can publish the config file with:
+2. Publish the Synth configuration file:
 
-```bash
-php artisan vendor:publish --tag="synth-config"
-```
+   ```bash
+   php artisan vendor:publish --tag=synth-config
+   ```
 
-This is the contents of the published config file:
+3. Set your OpenAI API key in the `.env` file:
 
-```php
-return [
-];
-```
+   ```   OPENAI_KEY=YOUR_API_KEY   ```
 
 ## Usage
-
-```php
-$synth = new Blinq\Synth();
-echo $synth->echoPhrase('Hello, Blinq!');
-```
-
-## Testing
+To use Synth, simply run the `synth` command:
 
 ```bash
-composer test
+php artisan synth
 ```
 
-## Changelog
+This will open the Synth CLI, where you can interact with the GPT model and perform various tasks.
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+### Features
+- Automatically switch from small to large model when needed (gpt-3.5-turbo vs gpt-3.5-turbo-16k)
+- Uses the functions API of OpenAI
 
-## Contributing
+### Modules
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Synth provides several modules that you can use to perform specific actions:
 
-## Security Vulnerabilities
+- Attachments: Attach files to the conversation with GPT.
+- Architect: Brainstorm and generate a new application architecture.
+- Chat: Chat with GPT to get responses and perform actions.
+- Make: Forces GPT to generate files for the question asked.
+- Migrations: Generate migrations for your application.
+- Models: Generate models for your application.
+- Files: Write files to the filesystem.
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+You can select a module from the main menu and follow the prompts to perform the desired actions.
 
-## Credits
+> Note: Some modules require a previous step to be completed, such as creating an architecture before generating migrations or models.
 
-- [Lennard](https://github.com/lennardv2)
-- [All Contributors](../../contributors)
+## Writing Your Own Modules
 
-## License
+Synth allows you to extend its functionality by writing your own modules. A module is a class that implements the necessary methods to register and handle specific actions.
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+To create a new module, follow these steps:
 
-## TODO
-- [ ] Refactor the code a bit
-- [ ] Non-interactive mode
-- [x] Cancel a running chatgpt answer with ctrl+c
+1. Create a new PHP class that extends the `Module` class.
+2. Implement the `name` method to define the name of your module.
+3. Implement the `register` method to define the actions provided by your module.
+4. Implement the `onSelect` method to handle the selected action.
+
+Here is an example of a custom module implementation:
+
+```php
+use Blinq\Synth\Modules\Module;
+
+/**
+ * Class MyModule
+ * 
+ * @propery \Blinq\Synth\Commands\SynthCommand $cmd
+ */
+class MyModule extends Module
+{
+    public function name(): string
+    {
+        return 'MyModule';
+    }
+
+    public function register(): arraya
+    {
+        return [
+            'action1' => 'Perform Action 1',
+            'action2' => 'Perform Action 2',
+        ];
+    }
+
+    public function onSelect(?string $key = null)
+    {
+        $this->cmd->info("You selected: {$key}");
+
+        $synth = $this->cmd->synth;
+
+        if ($key === 'action1') {
+            // Handle Action 1
+            while (true) {
+                $input = $this->cmd->ask("You");
+
+                // Send the input to GPT
+                $synth->chat($input, [
+                    // ... The OpenAI Chat options
+
+                    // If you want a function to be called by GPT
+                    'function_call' => ['name' => 'some_function'], // Forces the function call
+                    'functions' => [
+                        [
+                            'name' => 'some_function',
+                            'description' => 'Description of the function',
+                            'parameters' => [
+                                // ..schema
+                            ]
+                        ]
+                    ]
+                ]);
+
+                Functions::register('some_function', function (SynthCommand $cmd, $args, $asSpecified, $inSchema) { // etc..
+                    // Do something with the call
+                });
+
+                // This will parse the json result and call the function if needed
+                $synth->handleFunctionsForLastMessage();
+
+                // Just retrieve the last message
+                $lastMessage = $synth->getLastMessage();
+
+                // Echo it's contents
+                echo $lastMessage->content;
+
+                // Or it's raw function_call
+                dump($lastMessage->function_call);
+
+                if (!$input || $input == 'exit') {
+                    break;
+                }
+            }
+        }
+        if ($key === 'action2') {
+            // Handle Action 2
+        }
+    }
+}
+```
+
+You can then register your custom module in the `Modules` class within the Synth package and use it in the CLI interface:
+
+```php
+use Blinq\Synth\Modules;
+
+Modules::register(MyModule::class);
+```

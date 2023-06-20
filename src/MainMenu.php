@@ -2,6 +2,7 @@
 
 namespace Blinq\Synth;
 
+use Blinq\LLM\Entities\ChatMessage;
 use Blinq\Synth\Commands\SynthCommand;
 use Blinq\Synth\Traits\WithHooks;
 use Illuminate\Console\Command;
@@ -14,15 +15,32 @@ class MainMenu
 
     public function __construct(public SynthCommand $cmd)
     {
+        $this->on('show', function () {
+            $this->showTokenCount();
+        }, 100);
+    }
 
+    public function showTokenCount()
+    {
+        $tokens = $this->cmd->synth->estimateTokenCount();
+        $history = $this->cmd->synth->ai->getHistory();
+
+        if ($tokens > 0) {
+            $this->cmd->info("Estimated token count: " . $tokens);
+            $this->cmd->info("Number of messages: " . count($history));
+            $this->cmd->newLine();
+        }
     }
 
     public function welcome()
     {
-        // Let's find out what the user wants
-        $this->cmd->info('-----------------------------------------------');
-        $this->cmd->info('Laravel Synth');
-        $this->cmd->info('-----------------------------------------------');
+        $this->cmd->info('--------------------------------------------');
+        $this->cmd->info('░░░░░░░ ░░    ░░ ░░░    ░░ ░░░░░░░░ ░░   ░░ ');
+        $this->cmd->info('▒▒       ▒▒  ▒▒  ▒▒▒▒   ▒▒    ▒▒    ▒▒   ▒▒ ');
+        $this->cmd->info('▒▒▒▒▒▒▒   ▒▒▒▒   ▒▒ ▒▒  ▒▒    ▒▒    ▒▒▒▒▒▒▒ ');
+        $this->cmd->info('     ▓▓    ▓▓    ▓▓  ▓▓ ▓▓    ▓▓    ▓▓   ▓▓ ');
+        $this->cmd->info('███████    ██    ██   ████    ██    ██   ██ ');
+        $this->cmd->info('--------------------------------------------');
     }
 
     public function handle()
