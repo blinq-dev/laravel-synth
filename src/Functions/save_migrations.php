@@ -22,7 +22,7 @@ Functions::register('save_migrations', function (SynthCommand $cmd, $migrations 
         if (! str($contents)->startsWith('<?php')) {
             $contents = "<?php\n\n".$contents;
         }
-        
+
         $migrationFile = database_path('migrations/'.$file);
         $cmd->modules->get('Files')?->addFile($migrationFile, $contents);
         $cmd->modules->get('Attachments')?->addAttachment($migrationFile, $contents);

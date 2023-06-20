@@ -70,7 +70,6 @@ class Attachments extends Module
         $this->setAttachmentsToChatHistory();
     }
 
-
     public function removeAttachment($key)
     {
         unset($this->attachments[$key]);
@@ -88,12 +87,12 @@ class Attachments extends Module
 
     public function searchAndAttachFiles()
     {
-        $this->cmd->info("Type something to search for a file to attach");
+        $this->cmd->info('Type something to search for a file to attach');
         $this->cmd->line("Search and end with '*' to include all matching files");
         $this->cmd->newLine();
         $this->cmd->line("exit   - Press enter or type 'exit' to discard");
-        $this->cmd->line("view   - to view the current attachments");
-        $this->cmd->line("clear  - to clear the current attachments");
+        $this->cmd->line('view   - to view the current attachments');
+        $this->cmd->line('clear  - to clear the current attachments');
 
         while (true) {
             $hasWildcard = false;
@@ -114,12 +113,14 @@ class Attachments extends Module
                 return $files ?? [];
             });
 
-            if ($file === "view") {
+            if ($file === 'view') {
                 $this->viewAttachments();
+
                 continue;
             }
-            if ($file === "clear") {
+            if ($file === 'clear') {
                 $this->clearAttachments();
+
                 continue;
             }
 
@@ -162,7 +163,7 @@ class Attachments extends Module
             $files[] = $search.'    => '.$path;
 
             $count++;
-            
+
             if ($count >= $limit) {
                 break;
             }

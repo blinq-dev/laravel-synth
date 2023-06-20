@@ -13,7 +13,7 @@ trait WithHooks
 
     public function dispatch($event, $args = [])
     {
-        if (!isset($this->hooks[$event])) {
+        if (! isset($this->hooks[$event])) {
             return;
         }
 

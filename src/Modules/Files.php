@@ -20,6 +20,7 @@ class Files extends Module
         $this->cmd->mainMenu->on('show', function () {
             $this->notice();
         });
+
         return [
             'write' => 'Write files to the filesystem',
         ];
@@ -30,7 +31,7 @@ class Files extends Module
         if (count($this->files) > 0) {
             $count = count($this->files);
             $this->cmd->info("You have $count unwritten files:");
-            echo collect($this->files)->keys()->map(fn ($x) => '- '. $x)->implode(PHP_EOL);
+            echo collect($this->files)->keys()->map(fn ($x) => '- '.$x)->implode(PHP_EOL);
             $this->cmd->newLine(2);
         }
     }
@@ -49,7 +50,7 @@ class Files extends Module
 
         foreach ($this->files as $file => $contents) {
             if ($this->cmd->confirm("Do you want to write the following file: $file", true)) {
-                $file = $base . '/' . $file;
+                $file = $base.'/'.$file;
                 $directory = dirname($file);
 
                 if (! is_dir($directory)) {

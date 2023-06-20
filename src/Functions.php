@@ -29,7 +29,7 @@ class Functions
 
     public static function isAllowed($name)
     {
-        foreach(static::$functions as $key => $value) {
+        foreach (static::$functions as $key => $value) {
             if ($name === $key) {
                 return true;
             }
