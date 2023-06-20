@@ -14,6 +14,7 @@ class Synth
     public Client $ai;
 
     public $smallModel = 'gpt-3.5-turbo-0613';
+
     public $largeModel = 'gpt-3.5-turbo-16k-0613';
 
     public $model = 'gpt-3.5-turbo-0613';

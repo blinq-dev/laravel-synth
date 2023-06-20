@@ -50,16 +50,16 @@ class Files extends Module
 
         foreach ($this->files as $file => $contents) {
             $basename = basename($file);
-            
+
             $this->cmd->comment($file);
-            $this->cmd->comment("----");
+            $this->cmd->comment('----');
             $this->cmd->line($contents);
 
             $fullFile = $base.'/'.$file;
 
             $fileExists = file_exists($fullFile);
 
-            if ($this->cmd->confirm("Write $basename?" . ($fileExists ? ' (File already exists)' : ''), !$fileExists)) {
+            if ($this->cmd->confirm("Write $basename?".($fileExists ? ' (File already exists)' : ''), ! $fileExists)) {
                 $file = $this->cmd->askWithCompletion('Write path', [$file], $file);
 
                 if ($file) {
