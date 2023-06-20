@@ -2,7 +2,6 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/blinq/synth.svg?style=flat-square)](https://packagist.org/packages/blinq/synth)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/blinq-dev/laravel-synth/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/blinq-dev/laravel-synth/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/blinq/synth.svg?style=flat-square)](https://packagist.org/packages/blinq/synth)
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
