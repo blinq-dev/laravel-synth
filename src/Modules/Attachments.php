@@ -166,7 +166,7 @@ class Attachments extends Module
 
         $found = false;
         /**
-         * @var ChatMessage
+         * @var ChatMessage $message
          */
         foreach ($history as &$message) {
             if ($message->role == 'user' && str($message->content)->contains('[x84y2jd]')) {

@@ -121,9 +121,9 @@ class Synth
 
                 return;
             }
-        }
 
-        Functions::call($functionCall, $this->cmd, ...$parsed);
+            Functions::call($functionCall, $this->cmd, ...$parsed);
+        }
     }
 
     public function fixSyntax(string $args)
