@@ -33,6 +33,7 @@ This will open the Synth CLI, where you can interact with the GPT model and perf
 ### Features
 - Automatically switch from small to large model when needed (gpt-3.5-turbo vs gpt-3.5-turbo-16k)
 - Uses the functions API of OpenAI
+- Cancel generation with Ctrl+C
 
 ### Modules
 
