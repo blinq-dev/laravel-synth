@@ -40,16 +40,16 @@ php artisan synth
 This will open the Synth CLI, where you can interact with the GPT model and perform various tasks.
 
 ### Features 🌟
-- Automatically switch from small to large model when needed (gpt-3.5-turbo vs gpt-3.5-turbo-16k) 🔄🚀
-- Uses the functions API of OpenAI 👨‍💻🎯
-- Cancel generation with Ctrl+C 🚫⌨️
-- Attachments: Attach files to the conversation with GPT. 🗂️💬
-- Architect: Brainstorm and generate a new application architecture. 💡🏛️
-- Chat: Chat with GPT to get responses and perform actions. 💬🤖
-- Make: Forces GPT to generate files for the question asked. 📂💪
-- Migrations: Generate migrations for your application. 📦🚚
-- Models: Generate models for your application. 📈👩‍🔬
-- Files: Write files to the filesystem. 🖊️📁
+- Automatically switch from small to large model when needed (gpt-3.5-turbo vs gpt-3.5-turbo-16k) 🔄
+- Uses the functions API of OpenAI 👨‍💻
+- Cancel generation with Ctrl+C 🚫⌨
+- Attachments: Attach files to the conversation with GPT. 🗂️
+- Architect: Brainstorm and generate a new application architecture. 💡🏛
+- Chat: Chat with GPT to get responses and perform actions. 💬
+- Make: Forces GPT to generate files for the question asked. 📂
+- Migrations: Generate migrations for your application. 📦
+- Models: Generate models for your application. 📈
+- Files: Write files to the filesystem. 🖊️
 
 You can select a module from the main menu and follow the prompts to perform the desired actions.
 
