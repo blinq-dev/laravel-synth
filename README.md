@@ -1,7 +1,15 @@
 
 # Laravel Synth
+<img width="693" alt="Laravel Synth" src="https://github.com/blinq-dev/laravel-synth/assets/168357/7dccb9ba-1db5-4d6f-9a41-fde6f99a2446">
 
 Synth is a Laravel tool that helps you generate code and perform various tasks in your Laravel application. It leverages the power of OpenAI's GPT language model to provide an interactive and intelligent development experience.
+
+## Demo
+
+https://github.com/blinq-dev/laravel-synth/assets/168357/78116a9a-1f37-4410-9f20-f9fe6573196b
+
+https://github.com/blinq-dev/laravel-synth/assets/168357/6635807d-e313-48a2-9aae-26686d910d7e
+
 
 ## Installation
 
