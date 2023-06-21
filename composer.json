@@ -17,7 +17,6 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/contracts": "^10.0",
         "blinq/openai": "^1.0.2",
         "spatie/laravel-package-tools": "^1.14.0"
     },
