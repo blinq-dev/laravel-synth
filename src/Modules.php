@@ -24,6 +24,7 @@ class Modules
         static::register(Modules\Models::class);
         static::register(Modules\Files::class);
         static::register(Modules\History::class);
+        static::register(Modules\Schema::class);
     }
 
     public static function register($module)
