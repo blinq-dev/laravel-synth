@@ -37,17 +37,18 @@ class Schema extends Module
                 $item = (array) $item;
                 // First key
                 $carry[] = $item[array_key_first($item)];
+
                 return $carry;
             }, []);
 
         $output = "[table_schema]\n\n";
 
-        foreach($tables as $table) {
+        foreach ($tables as $table) {
             $output .= "Table: $table\n\n";
-            $columns = DB::select('SHOW COLUMNS FROM ' . $table);
-            foreach($columns as $column) {
+            $columns = DB::select('SHOW COLUMNS FROM '.$table);
+            foreach ($columns as $column) {
                 $column = (array) $column;
-                $output .= "* " . $column['Field'] . " (" . $column['Type'] . ")\n";
+                $output .= '* '.$column['Field'].' ('.$column['Type'].")\n";
             }
         }
 
@@ -82,7 +83,7 @@ class Schema extends Module
     public function notice()
     {
         if ($this->schema) {
-            $this->cmd->info("Schema is attached to this conversation.");
+            $this->cmd->info('Schema is attached to this conversation.');
             $this->cmd->newLine(2);
         }
     }
