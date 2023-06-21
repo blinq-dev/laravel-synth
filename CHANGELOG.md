@@ -2,6 +2,12 @@
 
 All notable changes to `synth` will be documented in this file.
 
+## v1.0.5 - 2023-06-21
+
+- Schema option, load the current database schema into the conversation so you can ask for queries
+
+**Full Changelog**: https://github.com/blinq-dev/laravel-synth/compare/v1.0.4...v1.0.5
+
 ## v1.0.4 - 2023-06-21
 
 ### What's Changed
