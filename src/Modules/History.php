@@ -29,7 +29,7 @@ class History extends Module
         /**
          * @var ChatMessage $item
          */
-        foreach($history as $item) {
+        foreach ($history as $item) {
             $this->cmd->comment($item->role);
             $this->cmd->comment('----');
             $this->cmd->line($item->content ?? $item->function_call['name'] ?? '');
