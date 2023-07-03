@@ -1,6 +1,5 @@
-
 # Synth for Laravel
-(Not a official laravel package)
+(Not an official Laravel package)
 
 <img width="693" alt="Synth for Laravel" src="https://github.com/blinq-dev/laravel-synth/assets/168357/7dccb9ba-1db5-4d6f-9a41-fde6f99a2446">
 
@@ -85,7 +84,7 @@ class MyModule extends Module
         return 'MyModule';
     }
 
-    public function register(): arraya
+    public function register(): array
     {
         return [
             'action1' => 'Perform Action 1',
