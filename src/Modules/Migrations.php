@@ -26,14 +26,8 @@ class Migrations extends Module
 
         $schema = include __DIR__.'/../Prompts/migrations.schema.php';
 
-        if (! $this->cmd->modules->get('Attachments')->getAttachments('architecture')) {
-            $this->cmd->error('You need to create an architecture first');
-
-            return;
-        }
-
         while (true) {
-            $this->cmd->synth->chat('Please make migration(s)', [
+            $this->cmd->synth->chat('Please make migration(s) for the attached data', [
                 'temperature' => 0,
                 'function_call' => ['name' => 'save_migrations'],
                 ...$schema,
