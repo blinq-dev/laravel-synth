@@ -22,7 +22,7 @@ class History extends Module
         ];
     }
 
-    public function onSelect(?string $key = null)
+    public function onSelect(string $key = null)
     {
         $history = $this->cmd->synth->ai->getHistory();
 

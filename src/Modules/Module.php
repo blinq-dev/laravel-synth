@@ -22,7 +22,7 @@ abstract class Module
         return [];
     }
 
-    public function onSelect(?string $key = null)
+    public function onSelect(string $key = null)
     {
 
     }

@@ -29,7 +29,7 @@ class Schema extends Module
         ];
     }
 
-    public function onSelect(?string $key = null)
+    public function onSelect(string $key = null)
     {
         // Get all tables in the database
         $tables = collect(DB::select('SHOW TABLES'))

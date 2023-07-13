@@ -20,7 +20,7 @@ class Migrations extends Module
         ];
     }
 
-    public function onSelect(?string $key = null)
+    public function onSelect(string $key = null)
     {
         $this->cmd->synth->loadSystemMessage('migrations');
 

@@ -51,7 +51,7 @@ class Modules
         })->toArray();
     }
 
-    public function select(?string $option = null)
+    public function select(string $option = null)
     {
         foreach (self::$modules as $module) {
             if ($module['options'][$option] ?? null) {

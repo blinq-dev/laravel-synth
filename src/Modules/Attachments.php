@@ -28,7 +28,7 @@ class Attachments extends Module
         ];
     }
 
-    public function onSelect(?string $key = null)
+    public function onSelect(string $key = null)
     {
         if ($key === 'attach') {
             $this->searchAndAttachFiles();

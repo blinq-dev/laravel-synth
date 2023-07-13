@@ -20,7 +20,7 @@ class Architect extends Module
         ];
     }
 
-    public function onSelect(?string $key = null)
+    public function onSelect(string $key = null)
     {
         $this->cmd->synth->loadSystemMessage('architect');
         // $schema = include __DIR__ . "/../Prompts/architect.schema.php";
