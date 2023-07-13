@@ -27,6 +27,8 @@ https://github.com/blinq-dev/laravel-synth/assets/168357/70bc57a5-0aa8-439f-95af
    php artisan vendor:publish --tag=synth-config
    ```
 
+   Here you can change the used model (gpt4 versus gpt3)
+
 3. Set your OpenAI API key in the `.env` file:
 
    ```   OPENAI_KEY=YOUR_API_KEY   ```
@@ -42,6 +44,7 @@ This will open the Synth CLI, where you can interact with the GPT model and perf
 
 ### Features 🌟
 - Automatically switch from small to large model when needed (gpt-3.5-turbo vs gpt-3.5-turbo-16k) 🔄
+- Include the whole database schema as an attachment
 - Uses the functions API of OpenAI 👨‍💻
 - Cancel generation with Ctrl+C 🚫⌨
 - Attachments: Attach files to the conversation with GPT. 🗂️
