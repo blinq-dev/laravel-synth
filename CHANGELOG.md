@@ -2,6 +2,20 @@
 
 All notable changes to `synth` will be documented in this file.
 
+## v1.0.7 - 2023-07-13
+
+### What's Changed
+
+- Bump dependabot/fetch-metadata from 1.5.1 to 1.6.0 by @dependabot in https://github.com/blinq-dev/laravel-synth/pull/2
+- Fixed small typos. by @hofmannsven in https://github.com/blinq-dev/laravel-synth/pull/3
+- Removed the architect limitation on migration / models
+
+### New Contributors
+
+- @hofmannsven made their first contribution in https://github.com/blinq-dev/laravel-synth/pull/3
+
+**Full Changelog**: https://github.com/blinq-dev/laravel-synth/compare/v1.0.6...v1.0.7
+
 ## v1.0.6 - 2023-06-21
 
 **Full Changelog**: https://github.com/blinq-dev/laravel-synth/compare/v1.0.5...v1.0.6
