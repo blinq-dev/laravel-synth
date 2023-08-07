@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Blinq\Synth\Tests;
 
 use Blinq\Synth\SynthServiceProvider;
